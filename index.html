@@ -1,0 +1,397 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Verification Portal | Maharaja Agrasen Himalayan Garhwal University</title>
+    <meta property="og:site_name" content="www.mahguverification.com">
+    <style>
+        /* Modern UI Styling with integrated background and branding */
+        :root {
+            --mahgu-red: #a52a2a; /* Deep Red for buttons and branding */
+            --mahgu-gold: #ffd700; /* Gold for accents */
+            --mahgu-blue: #003366; /* Deep blue from image */
+            --card-bg: rgba(255, 255, 255, 0.9); /* Opaque white for the card */
+            --font-family: 'Open Sans', 'Roboto', 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* Background configuration to use image_0.png */
+            background-image: url('image_0.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Dark overlay over the entire page body to enhance text readability on the background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* subtle dark transparent overlay */
+            z-index: -1;
+        }
+
+        /* Page Layout: Header, Content, Footer */
+        header {
+            background-color: var(--mahgu-blue);
+            color: white;
+            padding: 15px 30px;
+            text-align: left;
+            border-bottom: 4px solid var(--mahgu-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Placeholder for University Logo from the image */
+        .university-logo-placeholder {
+            width: 50px;
+            height: 50px;
+            background-color: var(--mahgu-gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: var(--mahgu-blue);
+            font-size: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: normal;
+        }
+
+        header .subtitle {
+            font-size: 14px;
+            color: var(--mahgu-gold);
+        }
+
+        .header-right {
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .header-right .portal-name {
+            font-weight: bold;
+            color: white;
+            font-size: 16px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        /* Main Portal Card */
+        .portal {
+            background-color: var(--card-bg);
+            width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
+            backdrop-filter: blur(5px); /* Modern subtle blur over background */
+        }
+
+        .portal-header {
+            background-color: var(--mahgu-red);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--mahgu-gold);
+        }
+
+        .portal-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .portal-header p {
+            margin: 5px 0 0;
+            font-size: 16px;
+            color: var(--mahgu-gold);
+        }
+
+        .p-4 {
+            padding: 30px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--mahgu-red);
+        }
+
+        button {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .verify-btn {
+            background-color: var(--mahgu-red);
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .verify-btn:hover {
+            background-color: #8c2424;
+            transform: translateY(-2px);
+        }
+
+        /* New Print Button styling */
+        .print-btn {
+            background-color: transparent;
+            color: var(--mahgu-red);
+            border: 2px solid var(--mahgu-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .print-btn:hover {
+            background-color: #fcebeb;
+        }
+
+        .printer-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        /* Results Display styling */
+        #output {
+            margin-top: 30px;
+            display: none; /* Hidden by default */
+            text-align: left;
+            border-top: 1px dashed #ccc;
+            padding-top: 20px;
+        }
+
+        .verified-header {
+            color: #2e7d32; /* Success green */
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .verify-check {
+            margin-right: 8px;
+            font-size: 20px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results-table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .results-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .results-table td {
+            padding: 10px 0;
+            font-size: 15px;
+        }
+
+        .data-label {
+            font-weight: bold;
+            color: #444;
+            width: 140px;
+        }
+
+        .status-badge {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* Footer styling, adapting elements from the image */
+        footer {
+            background-color: var(--mahgu-blue);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            border-top: 4px solid var(--mahgu-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            color: var(--mahgu-gold);
+        }
+
+        /* Text from the main image */
+        .footer-left {
+            max-width: 300px;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        /* Social media icons placeholder from image */
+        .social-icons-placeholder {
+            display: flex;
+            gap: 10px;
+            color: var(--mahgu-gold);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="university-logo-placeholder">M</div>
+            <div>
+                <h1>Maharaja Agrasen Himalayan Garhwal University</h1>
+                <p class="subtitle">Official Document Verification System</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <p class="portal-name">www.mahguverification.com</p>
+            <p>Verification Portal</p>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="portal">
+            <div class="portal-header">
+                <h2>DOCUMENT VERIFICATION</h2>
+                <p>B.Tech Certificate Database</p>
+            </div>
+            <div class="p-4">
+                <p>Enter the Certificate Serial Number to Verify Authenticity</p>
+                <input type="text" id="serialNum" placeholder="Ex: MAHGU/ECE/2014/01234">
+                <button class="verify-btn" onclick="verify()">VERIFY NOW</button>
+                
+                <button class="print-btn" onclick="window.print()">
+                    <span class="printer-icon">🖨️</span> Print Page for Records
+                </button>
+
+                <div id="output">
+                    <div class="verified-header">
+                        <span class="verify-check">✓</span> AUTHENTIC & VERIFIED
+                    </div>
+                    <table class="results-table">
+                        <tr>
+                            <td class="data-label">Candidate Name:</td>
+                            <td>Yogesh Singh</td>
+                        </tr>
+                        <tr>
+                            <td class="data-label">Degree Type:</td>
+                            <td>B.Tech (Electronics and Communication Engineering)</td>
+                        </tr>
+                        <tr>
+                            <td class="data-label">Serial Number:</td>
+                            <td>MAHGU/ECE/2024/07521</td>
+                        </tr>
+                        <tr>
+                            <td class="data-label">Issuance Year:</td>
+                            <td>2026</td>
+                        </tr>
+                        <tr>
+                            <td class="data-label">Verification Status:</td>
+                            <td><span class="status-badge">Issued & Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="font-size: 13px; color: #777; padding-top: 15px;">Note: This electronic document has been verified against the official university records.</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            ALL DIPLOMAS, UNDERGRADUATE, POSTGRADUATE, AND RESEARCH AVAILABLE.
+        </div>
+        <div class="footer-links">
+            <a href="https://www.hgu.ac.in" class="footer-link">WWW.HGU.AC.IN</a>
+            <a href="https://linktr.ee/mahgu" class="footer-link">LINKTR.EE/MAHGU</a>
+        </div>
+        <div class="social-icons-placeholder">
+            <span>f</span><span>Ⓒ</span><span>Ⓒ</span><span>Ⓟ</span><span>Ⓘ</span><span>Ⓘ</span><span>in</span>
+        </div>
+    </footer>
+
+    <script>
+        // Modified JavaScript logic for the full verification display
+        function verify() {
+            const val = document.getElementById('serialNum').value.trim().toUpperCase();
+            const outputDiv = document.getElementById('output');
+            
+            // This is your simulated database comparison
+            const TARGET_SERIAL = "MAHGU/ECE/2024/07521";
+            
+            if (val === TARGET_SERIAL) {
+                // If it matches, show the detailed success screen
+                outputDiv.style.display = "block";
+                // Optionally clear the input
+                // document.getElementById('serialNum').value = "";
+            } else {
+                // If it doesn't match, hide previous results and show an alert
+                outputDiv.style.display = "none";
+                alert("Verification Failed: This record does not exist in the MAHGU official database.");
+            }
+        }
+    </script>
+
+</body>
+</html>
